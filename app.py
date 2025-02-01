@@ -107,12 +107,22 @@ def tax_old(sal):
     return [tax_pay,slab_1,slab_2,slab_3,slab_4,slab_5]
 
 def tax_com(sal):
+    sal=sal-75000
     old=tax_old(sal)
     new=tax_new(sal)
+    A_old=sal+75000
+    T_old=old[0]
+    final_old=(A_old*(1-(0.5*0.25) + (0.1*0.3))/1.1 -T_old)/12
+    A_new=sal+75000
+    T_new=new[0]
+    final_new=(A_new*(1-(0.5*0.25) + (0.1*0.3))/1.1 -T_new)/12
+
     old_dic={'Tax_algo' :['Old'],'Total Tax' :[old[0]] , 'Slab_1' : [old[1]], 'Slab_2' : [old[2]], 'Slab_3' : [old[3]], 'Slab_4' : [old[4]], 'Slab_5' : [old[5]]}
     old_df=pd.DataFrame(old_dic)
+    old_df['Monthly in hand']=final_old
     new_dic={'Tax_algo' :['New'],'Total Tax' :[new[0]] , 'Slab_1' : [new[1]], 'Slab_2' : [new[2]], 'Slab_3' : [new[3]], 'Slab_4' : [new[4]], 'Slab_5' : [new[5]], 'Slab_6' : [new[6]]}
     new_df=pd.DataFrame(new_dic)
+    new_df['Monthly in hand']=final_new
     print(f'profit of {old[0]-new[0]} i.e {num2words.num2words(old[0]-new[0], lang='en_IN')} rupees')
     df=pd.concat([new_df,old_df])
     return df.set_index('Tax_algo')
@@ -121,7 +131,7 @@ def tax_com(sal):
 def index():
     if request.method == 'POST':
         # Get the integer from the form
-        value = int(request.form['value'])
+        value = float(request.form['value'])
         # Generate the DataFrame
         df = tax_com(value)
         # Convert the DataFrame to HTML for rendering
