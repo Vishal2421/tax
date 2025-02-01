@@ -3,23 +3,27 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DataFrame Display</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <title>Flask DataFrame Generator</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
 </head>
 <body>
-    <div class="container mt-5">
-        <h1 class="mb-4">Enter an Integer</h1>
+    <div class="container">
+        <header>
+            <h1>Generate Data from an Integer</h1>
+        </header>
+        
         <form method="POST">
-            <div class="form-group">
-                <input type="number" class="form-control" name="value" required>
-            </div>
-            <button type="submit" class="btn btn-primary">Submit</button>
+            <label for="input-value">Enter an Integer:</label>
+            <input type="number" name="value" id="input-value" required>
+            <button type="submit">Generate</button>
         </form>
 
         {% if table %}
-            <h2 class="mt-5">Generated DataFrame</h2>
-            <div class="table-responsive">
-                {{ table|safe }}
+            <div class="result">
+                <h2>Generated Data</h2>
+                <div class="table-responsive">
+                    {{ table|safe }}
+                </div>
             </div>
         {% endif %}
     </div>
