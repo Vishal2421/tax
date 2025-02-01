@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DataFrame Display</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+</head>
+<body>
+    <div class="container mt-5">
+        <h1 class="mb-4">Enter an Integer</h1>
+        <form method="POST">
+            <div class="form-group">
+                <input type="number" class="form-control" name="value" required>
+            </div>
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+
+        {% if table %}
+            <h2 class="mt-5">Generated DataFrame</h2>
+            <div class="table-responsive">
+                {{ table|safe }}
+            </div>
+        {% endif %}
+    </div>
+</body>
+</html>
